@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 const BioLink = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,12 +26,12 @@ const BioLink = () => {
       { 
         logo: "/youtube-logo.png",
         name: "YouTube",
-        url: "https://youtube.com/@YOUR_CHANNEL",
+        url: "https://youtube.com/channel/UCDHRfbbfEepcVRJ7qqDQk9g",
       },
       { 
         logo: "/roblox-logo.png",
         name: "Roblox",
-        url: "https://www.roblox.com/users/YOUR_ID/profile",
+        url: "https://www.roblox.com/users/504314066/profile",
       },
     ],
     
@@ -196,6 +196,31 @@ const BioLink = () => {
   // Use manual badges instead of API badges
   const badges = bioData.manualBadges || [];
 
+  // Memoize bio links to prevent re-rendering on timer updates
+  const memoizedBioLinks = useMemo(() => {
+    return bioData.bioLinks.map((link, index) => (
+      <a
+        key={index}
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group transition-all duration-300"
+        data-testid={`link-${link.name.toLowerCase()}`}
+      >
+        <img 
+          src={link.logo} 
+          alt={link.name}
+          className="h-12 w-12 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
+          style={{ 
+            width: '48px', 
+            height: '48px',
+            filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))',
+          }}
+        />
+      </a>
+    ));
+  }, [bioData.bioLinks]);
+
   const BioLinkButton = ({ logo, name, url }) => {
     return (
       <a
@@ -345,9 +370,7 @@ const BioLink = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          {bioData.bioLinks.map((link, index) => (
-            <BioLinkButton key={index} {...link} />
-          ))}
+          {memoizedBioLinks}
         </div>
       </div>
     </div>
