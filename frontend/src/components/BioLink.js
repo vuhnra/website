@@ -145,7 +145,17 @@ const BioLink = () => {
           src={logo} 
           alt={name}
           className="h-12 w-12 object-contain opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
-          style={{ width: '48px', height: '48px' }}
+          style={{ 
+            width: '48px', 
+            height: '48px',
+            filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.3))',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.filter = 'drop-shadow(0 0 16px rgba(255, 255, 255, 0.8))';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.filter = 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.3))';
+          }}
         />
       </a>
     );
@@ -184,7 +194,7 @@ const BioLink = () => {
           }`}
           data-testid="profile-card"
         >
-          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex items-center gap-4 min-w-[280px] hover:bg-white/10 transition-all duration-200">
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-3 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200">
             {/* Avatar */}
             <div className="relative flex-shrink-0">
               <img
