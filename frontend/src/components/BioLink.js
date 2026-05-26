@@ -145,6 +145,7 @@ const BioLink = () => {
           src={logo} 
           alt={name}
           className="h-12 w-12 object-contain opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
+          style={{ width: '48px', height: '48px' }}
         />
       </a>
     );
