@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Youtube, Gamepad2 } from 'lucide-react';
 
 const BioLink = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,9 +9,6 @@ const BioLink = () => {
   // CUSTOMIZE YOUR BIO LINK CONTENT HERE
   // ========================================
   const bioData = {
-    // Main Title at top
-    mainTitle: "Real",
-    
     // Your Discord User ID (for live status)
     discordUserId: "178906698440900608",
     
@@ -22,19 +18,17 @@ const BioLink = () => {
       avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
     },
     
-    // Bio Links - Add your links here
+    // Bio Links - Official logos only, no text
     bioLinks: [
       { 
-        icon: Youtube, 
-        label: "YouTube", 
-        url: "https://youtube.com/@yourhandle", 
-        color: "#FF0000" 
+        logo: "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
+        name: "YouTube",
+        url: "https://youtube.com/@YOUR_CHANNEL",
       },
       { 
-        icon: Gamepad2, 
-        label: "Roblox", 
-        url: "https://www.roblox.com/users/YOUR_ID/profile", 
-        color: "#00A2FF" 
+        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Roblox_Logo_2022.svg/2048px-Roblox_Logo_2022.svg.png",
+        name: "Roblox",
+        url: "https://www.roblox.com/users/YOUR_ID/profile",
       },
     ],
     
@@ -138,22 +132,21 @@ const BioLink = () => {
   const status = discordData?.discord_status || 'offline';
   const badges = getDiscordBadges(discordData?.discord_user?.public_flags);
 
-  const BioLinkButton = ({ icon: Icon, label, url, color }) => {
+  const BioLinkButton = ({ logo, name, url }) => {
     return (
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative px-6 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-3 min-w-[200px]"
-        data-testid={`link-${label.toLowerCase()}`}
+        className="group relative px-8 py-5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center"
+        data-testid={`link-${name.toLowerCase()}`}
       >
-        <div 
-          className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-xl"
-          style={{ backgroundColor: color }}
+        <img 
+          src={logo} 
+          alt={name}
+          className="h-8 w-auto object-contain grayscale brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ filter: 'grayscale(100%) brightness(0) invert(1)' }}
         />
-        
-        <Icon size={20} style={{ color: color }} className="relative z-10" />
-        <span className="text-white font-medium relative z-10">{label}</span>
       </a>
     );
   };
@@ -184,21 +177,9 @@ const BioLink = () => {
 
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-12 gap-6">
-        {/* Main Title - Smaller */}
-        <div 
-          className={`transition-all duration-1000 transform ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
-          }`}
-          data-testid="main-title"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold text-white tracking-wide">
-            {bioData.mainTitle}
-          </h1>
-        </div>
-
         {/* Discord-Style Profile Card with Live Status */}
         <div 
-          className={`transition-all duration-1000 delay-100 transform ${
+          className={`transition-all duration-1000 transform ${
             isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
           }`}
           data-testid="profile-card"
@@ -245,9 +226,9 @@ const BioLink = () => {
           </div>
         </div>
 
-        {/* Bio Links */}
+        {/* Bio Links - Logo Only */}
         <div 
-          className={`flex flex-col gap-3 w-full max-w-md transition-all duration-1000 delay-200 transform ${
+          className={`flex gap-4 transition-all duration-1000 delay-100 transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
