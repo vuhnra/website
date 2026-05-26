@@ -347,7 +347,7 @@ const BioLink = () => {
 
         {/* Bio Links - Logo Only */}
         <div 
-          className={`flex gap-6 transition-all duration-1000 delay-100 transform ${
+          className={`flex gap-3 transition-all duration-1000 delay-100 transform ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
