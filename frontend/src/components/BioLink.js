@@ -4,6 +4,16 @@ const BioLink = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [discordData, setDiscordData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [hasEntered, setHasEntered] = useState(false);
+  const videoRef = React.useRef(null);
+
+  const handleEnter = () => {
+    setHasEntered(true);
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.play();
+    }
+  };
 
   // ========================================
   // CUSTOMIZE YOUR BIO LINK CONTENT HERE
@@ -36,7 +46,7 @@ const BioLink = () => {
     ],
     
     // Video Background (optional)
-    videoUrl: "",
+    videoUrl: "/video.mp4",
   };
 
   // Fetch Discord status from our backend API
@@ -250,16 +260,40 @@ const BioLink = () => {
       {bioData.videoUrl && (
         <div className="absolute inset-0 w-full h-full">
           <video
+            ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover"
             data-testid="background-video"
           >
             <source src={bioData.videoUrl} type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
+      )}
+
+      {/* Click to Enter Splash Screen */}
+      {!hasEntered && (
+        <div 
+          className="fixed inset-0 z-50 bg-black flex items-center justify-center cursor-pointer transition-opacity duration-500"
+          onClick={handleEnter}
+          data-testid="enter-splash"
+        >
+          {/* Starfield on splash */}
+          <div className="stars" />
+          <div className="stars2" />
+          <div className="stars3" />
+          
+          <div className="relative z-10 text-center animate-pulse">
+            <p className="text-white/80 text-2xl md:text-3xl font-light tracking-widest mb-3">
+              click to enter
+            </p>
+            <p className="text-white/40 text-xs tracking-wider">
+              [ audio will play ]
+            </p>
+          </div>
         </div>
       )}
 
