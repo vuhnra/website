@@ -203,18 +203,18 @@ const BioLink = () => {
           }`}
           data-testid="profile-card"
         >
-          <div className="bg-[#2b2d31]/30 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex items-center gap-4 min-w-[280px] hover:bg-[#2b2d31]/40 transition-all duration-200">
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex items-center gap-4 min-w-[280px] hover:bg-white/10 transition-all duration-200">
             {/* Avatar */}
             <div className="relative flex-shrink-0">
               <img
                 src={avatar}
                 alt="Profile"
-                className="w-16 h-16 rounded-full border-2 border-[#3f4147]/50"
+                className="w-16 h-16 rounded-full border-2 border-white/20"
                 data-testid="profile-avatar"
               />
               {/* Live status indicator */}
               <div 
-                className="absolute bottom-0 right-0 w-4 h-4 border-2 border-[#2b2d31] rounded-full transition-colors duration-300"
+                className="absolute bottom-0 right-0 w-4 h-4 border-2 border-black/50 rounded-full transition-colors duration-300"
                 style={{ backgroundColor: getStatusColor(status) }}
                 data-testid="status-indicator"
               />
