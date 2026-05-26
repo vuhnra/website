@@ -13,16 +13,7 @@ const BioLink = () => {
     discordUserId: "178906698440900608",
     
     // Manual badges (since Discord API doesn't expose them)
-    manualBadges: [
-      {
-        name: "HypeSquad Bravery",
-        icon: "https://cdn.discordapp.com/badge-icons/8a88d63823d8a71cd5e390baa45efa02.png"
-      },
-      {
-        name: "Nitro",
-        icon: "https://cdn.discordapp.com/badge-icons/2ba85e8026a8614b640c2837bcdfe21b.png"
-      }
-    ],
+    manualBadges: [],
     
     // Default profile info (will be replaced by live Discord data)
     defaultProfile: {
