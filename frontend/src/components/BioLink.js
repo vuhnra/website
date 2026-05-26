@@ -208,17 +208,11 @@ const BioLink = () => {
         <img 
           src={logo} 
           alt={name}
-          className="h-12 w-12 object-contain opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
+          className="h-12 w-12 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
           style={{ 
             width: '48px', 
             height: '48px',
-            filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.3))',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.filter = 'drop-shadow(0 0 16px rgba(255, 255, 255, 0.8))';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.filter = 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.3))';
+            filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.4))',
           }}
         />
       </a>
