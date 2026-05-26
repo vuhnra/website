@@ -126,11 +126,7 @@ const BioLink = () => {
     
     const activities = discordData.activities || [];
     
-    // Check for Spotify (type 2)
-    const spotify = activities.find(a => a.type === 2);
-    if (spotify) {
-      return `🎵 Listening to ${spotify.details}`;
-    }
+    // Don't show Spotify in status text anymore (we'll show it separately)
     
     // Check for custom status (type 4)
     const customStatus = activities.find(a => a.type === 4);
@@ -151,6 +147,10 @@ const BioLink = () => {
     
     return discordData.discord_status.charAt(0).toUpperCase() + discordData.discord_status.slice(1);
   };
+
+  // Get Spotify data
+  const spotifyData = discordData?.spotify || null;
+  const isListeningToSpotify = discordData?.listening_to_spotify || false;
 
   const username = discordData?.discord_user?.username || bioData.defaultProfile.username;
   const avatar = discordData?.discord_user?.avatar 
@@ -263,6 +263,39 @@ const BioLink = () => {
             </div>
           </div>
         </div>
+
+        {/* Spotify Now Playing - Show below Discord card */}
+        {isListeningToSpotify && spotifyData && (
+          <div 
+            className={`transition-all duration-1000 delay-150 transform ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+            data-testid="spotify-card"
+          >
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-3 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 min-w-[280px]">
+              {/* Album Art */}
+              <img 
+                src={spotifyData.album_art_url} 
+                alt={spotifyData.album}
+                className="w-14 h-14 rounded-lg"
+                data-testid="spotify-album-art"
+              />
+              
+              {/* Song Info */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-sm text-green-500 font-medium">🎵 Spotify</span>
+                </div>
+                <p className="text-white text-sm font-medium truncate" data-testid="spotify-song">
+                  {spotifyData.song}
+                </p>
+                <p className="text-[#b5bac1] text-xs truncate" data-testid="spotify-artist">
+                  {spotifyData.artist}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Bio Links - Logo Only */}
         <div 
