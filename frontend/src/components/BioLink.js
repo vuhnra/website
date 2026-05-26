@@ -155,6 +155,39 @@ const BioLink = () => {
   const spotifyData = discordData?.spotify || null;
   const isListeningToSpotify = discordData?.listening_to_spotify || false;
 
+  // Calculate Spotify progress
+  const [spotifyProgress, setSpotifyProgress] = React.useState(0);
+  const [currentTime, setCurrentTime] = React.useState(0);
+  const [duration, setDuration] = React.useState(0);
+
+  React.useEffect(() => {
+    if (spotifyData && spotifyData.timestamps) {
+      const updateProgress = () => {
+        const now = Date.now();
+        const start = spotifyData.timestamps.start;
+        const end = spotifyData.timestamps.end;
+        const totalDuration = end - start;
+        const elapsed = now - start;
+        const progress = Math.min((elapsed / totalDuration) * 100, 100);
+        
+        setSpotifyProgress(progress);
+        setCurrentTime(Math.floor(elapsed / 1000));
+        setDuration(Math.floor(totalDuration / 1000));
+      };
+
+      updateProgress();
+      const interval = setInterval(updateProgress, 1000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [spotifyData]);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   const username = discordData?.discord_user?.username || bioData.defaultProfile.username;
   const avatar = discordData?.discord_user?.avatar 
     ? `https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png?size=128`
@@ -275,26 +308,38 @@ const BioLink = () => {
             }`}
             data-testid="spotify-card"
           >
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-3 py-3 flex items-center gap-3 hover:bg-white/10 transition-all duration-200 min-w-[280px]">
+            <div className="flex items-start gap-3 min-w-[280px]">
               {/* Album Art */}
               <img 
                 src={spotifyData.album_art_url} 
                 alt={spotifyData.album}
-                className="w-14 h-14 rounded-lg"
+                className="w-16 h-16 rounded-lg shadow-lg"
                 data-testid="spotify-album-art"
               />
               
               {/* Song Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-sm text-green-500 font-medium">🎵 Spotify</span>
+                  <span className="text-xs text-green-500 font-medium">Spotify</span>
                 </div>
-                <p className="text-white text-sm font-medium truncate" data-testid="spotify-song">
+                <p className="text-white text-sm font-medium truncate mb-1" data-testid="spotify-song">
                   {spotifyData.song}
                 </p>
-                <p className="text-[#b5bac1] text-xs truncate" data-testid="spotify-artist">
+                <p className="text-[#b5bac1] text-xs truncate mb-2" data-testid="spotify-artist">
                   {spotifyData.artist}
                 </p>
+                
+                {/* Progress Bar */}
+                <div className="flex items-center gap-2">
+                  <span className="text-[#b5bac1] text-xs">{formatTime(currentTime)}</span>
+                  <div className="flex-1 bg-white/10 rounded-full h-1 overflow-hidden">
+                    <div 
+                      className="bg-green-500 h-full transition-all duration-1000"
+                      style={{ width: `${spotifyProgress}%` }}
+                    />
+                  </div>
+                  <span className="text-[#b5bac1] text-xs">{formatTime(duration)}</span>
+                </div>
               </div>
             </div>
           </div>
