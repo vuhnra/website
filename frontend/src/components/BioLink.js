@@ -287,11 +287,8 @@ const BioLink = () => {
           <div className="stars3" />
           
           <div className="relative z-10 text-center animate-pulse">
-            <p className="text-white/80 text-2xl md:text-3xl font-light tracking-widest mb-3">
+            <p className="text-white/80 text-2xl md:text-3xl font-light tracking-widest">
               click to enter
-            </p>
-            <p className="text-white/40 text-xs tracking-wider">
-              [ audio will play ]
             </p>
           </div>
         </div>
