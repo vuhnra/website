@@ -51,18 +51,7 @@ const BioLink = () => {
     },
     
     // Bio Links - Official logos only, no text
-    bioLinks: [
-      { 
-        logo: "/youtube-logo.png",
-        name: "YouTube",
-        url: "https://youtube.com/channel/UCDHRfbbfEepcVRJ7qqDQk9g",
-      },
-      { 
-        logo: "/roblox-logo.png",
-        name: "Roblox",
-        url: "https://www.roblox.com/users/504314066/profile",
-      },
-    ],
+    bioLinks: [],
     
     // Video Background (optional)
     videoUrl: "/video.mp4",
