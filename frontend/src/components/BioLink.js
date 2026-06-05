@@ -5,15 +5,34 @@ const BioLink = () => {
   const [discordData, setDiscordData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [hasEntered, setHasEntered] = useState(false);
+  const [viewCount, setViewCount] = useState(null);
   const videoRef = React.useRef(null);
+  const audioRef = React.useRef(null);
 
   const handleEnter = () => {
     setHasEntered(true);
     if (videoRef.current) {
-      videoRef.current.muted = false;
       videoRef.current.play();
     }
+    if (audioRef.current) {
+      audioRef.current.volume = 0.5;
+      audioRef.current.play();
+    }
   };
+
+  // Fetch view count
+  useEffect(() => {
+    const incrementViews = async () => {
+      try {
+        const response = await fetch('https://api.counterapi.dev/v1/vuhnra/views/up');
+        const data = await response.json();
+        setViewCount(data.count);
+      } catch (error) {
+        console.error('View counter error:', error);
+      }
+    };
+    incrementViews();
+  }, []);
 
   // ========================================
   // CUSTOMIZE YOUR BIO LINK CONTENT HERE
@@ -261,6 +280,16 @@ const BioLink = () => {
         </div>
       )}
 
+      {/* Background Audio */}
+      <audio
+        ref={audioRef}
+        loop
+        preload="auto"
+        data-testid="background-audio"
+      >
+        <source src="/audio.mp3" type="audio/mpeg" />
+      </audio>
+
       {/* Click to Enter Splash Screen */}
       {!hasEntered && (
         <div 
@@ -391,6 +420,16 @@ const BioLink = () => {
           {memoizedBioLinks}
         </div>
       </div>
+
+      {/* View Counter - Bottom Right */}
+      {hasEntered && viewCount !== null && (
+        <div 
+          className="fixed bottom-4 right-4 z-20 text-white/40 text-xs tracking-wider"
+          data-testid="view-counter"
+        >
+          {viewCount.toLocaleString()} views
+        </div>
+      )}
     </div>
   );
 };
