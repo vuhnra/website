@@ -27,8 +27,8 @@ const BioLink = () => {
     
     // Default profile info (will be replaced by live Discord data)
     defaultProfile: {
-      username: "realhvh",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+      username: "66japanese",
+      avatar: "https://cdn.discordapp.com/avatars/178906698440900608/00fa9cae5cfc9da5773de4d26812f1f3.png?size=128",
     },
     
     // Bio Links - Official logos only, no text
