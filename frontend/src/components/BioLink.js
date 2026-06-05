@@ -185,7 +185,7 @@ const BioLink = () => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const username = discordData?.discord_user?.username || bioData.defaultProfile.username;
+  const username = discordData?.discord_user?.username || 'Loading user...';
   const avatar = discordData?.discord_user?.avatar 
     ? `https://cdn.discordapp.com/avatars/${discordData.discord_user.id}/${discordData.discord_user.avatar}.png?size=128`
     : bioData.defaultProfile.avatar;
